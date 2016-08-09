@@ -1,0 +1,10 @@
+# Data_Notes.txt, Description of data files in this directory
+
+* District_Classification_200708_201415.csv:
+- School districts classified by TEA-defined categories
+- One row for each district and each school year beginning with the 2007-08 school year and ending with the 2014-15 school year
+- Data was retrieved and manually formatted from http://tea.texas.gov/acctres/analyze/years.html in July 2016
+
+* A1607092.zip:
+- Compressed folder containing district and job type salary information for each school year beginning with the 1993-94 school year and ending with the 2010-11 school year
+- This data was requested from and provided by Nina Taylor at the TEA (nina.taylor@tea.texas.gov) in July 2016
