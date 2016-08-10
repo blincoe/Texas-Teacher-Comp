@@ -108,15 +108,18 @@ dat$MV.RaceMultiple <- ifelse(dat$RAC2P == 68, 1, 0)
 
 dat$MV.OccupationFactor <- factor(dat$OCCP)
 dat$MV.PlaceOfWorkFactor <- factor(dat$POWPUMA)
+dat$MV.PlaceOfWorkFactor <- relevel(dat$MV.PlaceOfWorkFactor, '5300')
 
 ACM.OccupationCodes <- c(800, 860, 620, 630, 640, 650, 8740, 6010, 1300, 1640, 3130, 3255, 3256,
                          3258, 3150, 3160, 2200, 2340, 2000, 2400, 2040, 2840, 2830, 2810, 1010)
-dat$ACM.Occupation <- ifelse(dat$OCCP %in% ACM.OccupationCodes, 1, 0)
+dat$ACM.Occupation <- (dat$OCCP %in% ACM.OccupationCodes)
 
-dat$Occupation.Teacher <- ifelse(dat$OCCP %in% c(2310, 2320), 1, 0)
+dat$Occupation.Teacher <- (dat$OCCP %in% c(2310, 2320))
+
+dat$PrivateSectorOcc <- (dat$COW %in% c(1, 2))
 
 run.model <- function(year) {
-    model <- lm(data = dat[dat$SurveyYear == year & dat$Occupation.Teacher == 0, ],
+    model <- lm(data = dat[dat$SurveyYear == year & !dat$Occupation.Teacher & dat$PrivateSectorOcc, ],
                 formula = MV.lWage ~ MV.Female +
                     MV.MastersDegree + MV.ProfDegree + MV.DoctDegree +
                     MV.HoursWorked + MV.WeeksWorked + MV.Age + MV.AgeSq +
