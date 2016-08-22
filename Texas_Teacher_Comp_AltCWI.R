@@ -1,12 +1,12 @@
 ################################################################################
-## Texas_Teacher_Comp_CWI.R                                                   ##
+## Texas_Teacher_Comp_AltCWI.R                                                ##
 ## Contact: ian@blincoe.xyz                                                   ##
 ## R version 3.3.1                                                            ##
 ## Description: Pull Census American Community Survey data, build wage index, ##
-##   and plot results                                                         ##
+##  and output final dataset                                                  ##
 ################################################################################
 
-src.dir <- 'C:/Users/blincoeshirey/Documents/Ian/Analysis/Texas-Teacher-Comp'
+source.dir <- 'C:/Users/blincoeshirey/Documents/Ian/Analysis/Texas-Teacher-Comp'
 working.dir <- 'C:/Users/blincoeshirey/Documents/Ian/Analysis/Texas-Teacher-Comp-WD'
 
 setwd(working.dir)
@@ -58,8 +58,8 @@ for (year in beg.year:end.year) {
     }
 }
 
-## 2005 & on has good POWPUMA info
-dat <- raw.dat[raw.dat$SurveyYear >= 2005, ]
+## Apply global data exclusions
+dat <- raw.dat
 
 ## Only pick Texas places of work
 dat <- dat[dat$POWSP == 48, ]
@@ -73,11 +73,14 @@ dat <- dat[(dat$SurveyYear <= 2007 & dat$SCHL %in% 13:16) | (dat$SurveyYear >= 2
 ## Exclude less than half-time workers
 dat <- dat[dat$WKHP >= 30, ]
 
-## Exclude super low-wage earners
-dat <- dat[dat$WAGP > 5000, ]
+## Exclude low and high wage earners (approx. 5th & 95th percentile)
+dat <- dat[dat$WAGP > 15000 & dat$WAGP < 200000, ]
 
 ## Exclude Non-English Speakers
 dat <- dat[!(dat$ENG %in% c(3, 4)), ]
+
+## Exclude POWPUMAs that do not map to counties
+dat <- dat[!(dat$POWPUMA %in% c(4816, 4820)), ]
 
 ## Define Model Variables
 dat$MV.lWage <- log(dat$WAGP)
@@ -86,7 +89,7 @@ dat$MV.MastersDegree <- ifelse((dat$SurveyYear <= 2007 & dat$SCHL == 14) | (dat$
 dat$MV.ProfDegree <- ifelse((dat$SurveyYear <= 2007 & dat$SCHL == 15) | (dat$SurveyYear >= 2008 & dat$SCHL == 23), 1, 0)
 dat$MV.DoctDegree <- ifelse((dat$SurveyYear <= 2007 & dat$SCHL == 16) | (dat$SurveyYear >= 2008 & dat$SCHL == 24), 1, 0)
 dat$MV.HoursWorked <- dat$WKHP
-dat$MV.WeeksWorked <- dat$WKW
+dat$MV.WeeksWorked <- factor(dat$WKW)
 dat$MV.Age <- dat$AGEP
 dat$MV.AgeSq <- dat$MV.Age ^ 2
 dat$MV.RaceBlack <- ifelse(dat$RAC2P == 2, 1, 0)
@@ -119,7 +122,7 @@ dat$Occupation.Teacher <- (dat$OCCP %in% c(2310, 2320))
 dat$PrivateSectorOcc <- (dat$COW %in% c(1, 2))
 
 run.model <- function(year) {
-    model <- lm(data = dat[dat$SurveyYear == year & !dat$Occupation.Teacher & dat$PrivateSectorOcc, ],
+    model <- lm(data = dat[dat$SurveyYear == 2005 & !dat$Occupation.Teacher & dat$PrivateSectorOcc, ],
                 formula = MV.lWage ~ MV.Female +
                     MV.MastersDegree + MV.ProfDegree + MV.DoctDegree +
                     MV.HoursWorked + MV.WeeksWorked + MV.Age + MV.AgeSq +
@@ -127,90 +130,34 @@ run.model <- function(year) {
                     MV.RaceSouthEastAsian + MV.RaceSouthAsian + MV.RacePacIsland +
                     MV.RaceOtherAsian + MV.RaceOther + MV.RaceMultiple +
                     MV.OccupationFactor + MV.PlaceOfWorkFactor - 1)
-    model.summary <- coef(summary(model))
 
-    location.list <- c('Dallas', 'Ft. Worth', 'Houston', 'Austin', 'San Antonio', 'El Paso')
-    location.code <- c('2300', '2500', '4600', '5300', '5900', '3300')
-    if (year <= 2011) {location.code[3] <- '4690'}
-    out.matrix <- matrix(ncol = 3, nrow = 6)
-    colnames(out.matrix) <- c('Location', 'Coef', 'SE')
-    out.dat <- data.frame(out.matrix)
-    for (i in 1:6) {
-        coef.name <- paste0('MV.PlaceOfWorkFactor', location.code[i])
-        out.dat$Location[i] <- location.list[i]
-        out.dat$Coef[i] <- model.summary[coef.name, 1]
-        out.dat$SE[i] <- model.summary[coef.name, 2]
-    }
+    model.summary <- data.frame(coef(summary(model)))
+
+    model.summary <- model.summary[grepl('MV.PlaceOfWorkFactor',row.names(model.summary)), ]
+
+    model.summary$POWPUMA <- substring(row.names(model.summary), 21, 24)
+    model.summary$IndexYear <- year
+    model.summary$AltCWI <- exp(model.summary$Estimate)
+    model.summary$AltCWIHigh <- exp(model.summary$Estimate + 2 * model.summary$Std..Error)
+    model.summary$AltCWILow <- exp(model.summary$Estimate - 2 * model.summary$Std..Error)
+
+    out.dat <- model.summary[ , c('POWPUMA', 'IndexYear', 'AltCWI', 'AltCWIHigh', 'AltCWILow')]
+
+    row.names(out.dat) <- NULL
+
     return(out.dat)
 }
 
 for (year in beg.year:end.year) {
     if (year == beg.year) {
         final.out.dat <- run.model(year)
-        final.out.dat$SurveyYear <- year
     } else {
         join.out.dat <- run.model(year)
-        join.out.dat$SurveyYear <- year
         final.out.dat <- rbind(final.out.dat, join.out.dat)
     }
 }
 
-
-## Plot results
-
-plot.names <- c('Dallas', 'Ft. Worth', 'Houston', 'San Antonio', 'El Paso', '')
-
-cwi.relative.austin <- exp(final.out.dat$Coef[final.out.dat$Location %in% plot.names & final.out.dat$SurveyYear == 2014] - final.out.dat$Coef[final.out.dat$Location == 'Austin' & final.out.dat$SurveyYear == 2014])
-
-cwi.relative.austin.se <- (final.out.dat$SE[final.out.dat$Location %in% plot.names & final.out.dat$SurveyYear == 2014] ^ 2 + final.out.dat$SE[final.out.dat$Location == 'Austin' & final.out.dat$SurveyYear == 2014] ^ 2) ^ (1 / 2)
-
-cwi.relative.austin.lci <- cwi.relative.austin * exp(-2 * cwi.relative.austin.se)
-cwi.relative.austin.uci <- cwi.relative.austin * exp(2 * cwi.relative.austin.se)
-
-cwi.relative.austin[6] <- NA
-cwi.relative.austin.lci[6] <- NA
-cwi.relative.austin.uci[6] <- NA
-
-cwi.plot.path <- paste0(src.dir, '/Plots/CWIBarplot.png')
-png(file = cwi.plot.path, width = 650, height = 350)
-cwi.plot <- barplot(cwi.relative.austin,
-                    yaxt = 'n', names.arg = plot.names,
-                    ylim = c(0, max(cwi.relative.austin[1:5]) * 1.1),
-                    col = 'grey40', space = 0.65)
-
-midpoints <- cwi.plot
-text(x = midpoints[, 1],
-     y = cwi.relative.austin + .07,
-     labels = paste0(sprintf('%.0f', cwi.relative.austin * 100), '%'))
-abline(h = 0)
-abline(h = 1, lty = 2)
-label <- 'Relative to Austin\n (100%)'
-text(x = midpoints[6], y = 1.1, labels = label)
-
-dev.off()
+final.out.csv.path <- paste0(source.dir, '/Data/AltCWI.csv')
+write.csv(final.out.dat, final.out.csv.path, row.names = FALSE)
 
 
-## Plot results with 95% CI
-
-cwi.ci.plot.path <- paste0(src.dir, '/Plots/CWIBarplotCI.png')
-png(file = cwi.ci.plot.path, width = 650, height = 350)
-cwi.ci.plot <- barplot(cwi.relative.austin,
-                    yaxt = 'n', names.arg = plot.names,
-                    ylim = c(0, max(cwi.relative.austin.uci[1:5]) * 1.1),
-                    col = 'grey40', space = 0.65)
-
-midpoints <- cwi.ci.plot
-text(x = midpoints[, 1] - 0.3,
-     y = cwi.relative.austin + .07,
-     labels = paste0(sprintf('%.0f', cwi.relative.austin * 100), '%'))
-abline(h = 0)
-abline(h = 1, lty = 2)
-label <- 'Relative to Austin\n (100%)'
-text(x = midpoints[6], y = 1.1, labels = label)
-
-segments(midpoints, cwi.relative.austin.uci, midpoints, cwi.relative.austin.lci, lwd = 1.5)
-
-arrows(midpoints, cwi.relative.austin.uci, midpoints, cwi.relative.austin.lci,
-       lwd = 1.5, angle = 90, code = 3, length = 0.05)
-
-dev.off()

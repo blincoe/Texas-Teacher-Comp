@@ -1,0 +1,255 @@
+CountyName,MetroName,CountyFIPS
+Hood,"Dallas-Fort Worth, TX",221
+Hunt,"Dallas-Fort Worth, TX",231
+Wise,"Dallas-Fort Worth, TX",497
+Ellis,"Dallas-Fort Worth, TX",139
+Denton,"Dallas-Fort Worth, TX",121
+Collin,"Dallas-Fort Worth, TX",85
+Dallas,"Dallas-Fort Worth, TX",113
+Tarrant,"Dallas-Fort Worth, TX",439
+Kaufman,"Dallas-Fort Worth, TX",257
+Johnson,"Dallas-Fort Worth, TX",251
+Parker,"Dallas-Fort Worth, TX",367
+Somervell,"Dallas-Fort Worth, TX",425
+Rockwall,"Dallas-Fort Worth, TX",397
+Austin,"Houston, TX",15
+Harris,"Houston, TX",201
+Brazoria,"Houston, TX",39
+Chambers,"Houston, TX",71
+Liberty,"Houston, TX",291
+Waller,"Houston, TX",473
+Montgomery,"Houston, TX",339
+Fort Bend,"Houston, TX",157
+Galveston,"Houston, TX",167
+Guadalupe,"San Antonio, TX",187
+Bexar,"San Antonio, TX",29
+Comal,"San Antonio, TX",91
+Medina,"San Antonio, TX",325
+Bandera,"San Antonio, TX",19
+Wilson,"San Antonio, TX",493
+Kendall,"San Antonio, TX",259
+Atascosa,"San Antonio, TX",13
+Williamson,"Austin, TX",491
+Hays,"Austin, TX",209
+Bastrop,"Austin, TX",21
+Travis,"Austin, TX",453
+Caldwell,"Austin, TX",55
+El Paso,"El Paso, TX",141
+Hudspeth,"El Paso, TX",229
+Hidalgo,"McAllen, TX",215
+Nueces,"Corpus Christi, TX",355
+Aransas,"Corpus Christi, TX",7
+San Patricio,"Corpus Christi, TX",409
+Cameron,"Brownsville, TX",61
+Coryell,"Killeen, TX",99
+Lampasas,"Killeen, TX",281
+Bell,"Killeen, TX",27
+Orange,"Beaumont, TX",361
+Newton,"Beaumont, TX",351
+Hardin,"Beaumont, TX",199
+Jefferson,"Beaumont, TX",245
+Lubbock,"Lubbock, TX",303
+Crosby,"Lubbock, TX",107
+Lynn,"Lubbock, TX",305
+Falls,"Waco, TX",145
+McLennan,"Waco, TX",309
+Armstrong,"Amarillo, TX",11
+Potter,"Amarillo, TX",375
+Randall,"Amarillo, TX",381
+Carson,"Amarillo, TX",65
+Oldham,"Amarillo, TX",359
+Webb,"Laredo, TX",479
+Burleson,"College Station, TX",51
+Brazos,"College Station, TX",41
+Robertson,"College Station, TX",395
+Upshur,"Longview, TX",459
+Gregg,"Longview, TX",183
+Rusk,"Longview, TX",401
+Smith,"Tyler, TX",423
+Taylor,"Abilene, TX",441
+Callahan,"Abilene, TX",59
+Jones,"Abilene, TX",253
+Archer,"Wichita Falls, TX",9
+Clay,"Wichita Falls, TX",77
+Wichita,"Wichita Falls, TX",485
+Bowie,"Texarkana, TX",37
+Martin,"Midland, TX",317
+Midland,"Midland, TX",329
+Ector,"Odessa, TX",135
+Grayson,"Sherman, TX",181
+Tom Green,"San Angelo, TX",451
+Irion,"San Angelo, TX",235
+Goliad,"Victoria, TX",175
+Victoria,"Victoria, TX",469
+Angelina,"Lufkin, TX",5
+Walker,"Huntsville, TX",471
+Trinity,"Huntsville, TX",455
+Henderson,"Athens, TX",213
+Harrison,"Marshall, TX",203
+Nacogdoches,"Nacogdoches, TX",347
+Starr,"Rio Grande City, TX",427
+Anderson,"Palestine, TX",1
+Maverick,"Eagle Pass, TX",323
+Cherokee,"Jacksonville, TX",73
+Lamar,"Paris, TX",277
+Kerr,"Kerrville, TX",265
+Val Verde,"Del Rio, TX",465
+Navarro,"Corsicana, TX",349
+Wharton,"El Campo, TX",481
+Jim Wells,"Alice, TX",249
+Cooke,"Gainesville, TX",97
+Brown,"Brownwood, TX",49
+Erath,"Stephenville, TX",143
+Matagorda,"Bay City, TX",321
+Hale,"Plainview, TX",189
+Howard,"Big Spring, TX",227
+Glasscock,"Big Spring, TX",173
+Hopkins,"Sulphur Springs, TX",223
+Washington,"Brenham, TX",477
+Kleberg,"Kingsville, TX",273
+Kenedy,"Kingsville, TX",261
+Titus,"Mount Pleasant, TX",449
+Bee,"Beeville, TX",25
+Palo Pinto,"Mineral Wells, TX",363
+Uvalde,"Uvalde, TX",463
+Gillespie,"Fredericksburg, TX",171
+Hockley,"Levelland, TX",219
+Gray,"Pampa, TX",179
+Hutchinson,"Borger, TX",233
+Willacy,"Raymondville, TX",489
+Moore,"Dumas, TX",341
+Calhoun,"Port Lavaca, TX",57
+Deaf Smith,"Hereford, TX",117
+Scurry,"Snyder, TX",415
+Nolan,"Sweetwater, TX",353
+Andrews,"Andrews, TX",3
+Zapata,"Zapata, TX",505
+Dawson,"Lamesa, TX",115
+Reeves,"Pecos, TX",389
+Wilbarger,"Vernon, TX",487
+San Augustine,NULL,405
+Collingsworth,NULL,87
+Throckmorton,NULL,447
+San Jacinto,NULL,407
+Shackelford,NULL,417
+Red River,NULL,387
+Van Zandt,NULL,467
+Stonewall,NULL,433
+Ochiltree,NULL,357
+Jeff Davis,NULL,243
+Schleicher,NULL,413
+Culberson,NULL,109
+Childress,NULL,75
+Freestone,NULL,161
+McCulloch,NULL,307
+Limestone,NULL,293
+Stephens,NULL,429
+Sterling,NULL,431
+San Saba,NULL,411
+Reagan,NULL,383
+Panola,NULL,365
+Parmer,NULL,369
+Sabine,NULL,403
+Shelby,NULL,419
+Sutton,NULL,435
+Zavala,NULL,507
+Yoakum,NULL,501
+Briscoe,NULL,45
+Hartley,NULL,205
+Haskell,NULL,207
+Jackson,NULL,239
+Houston,NULL,225
+De Witt,NULL,123
+Cochran,NULL,79
+Coleman,NULL,83
+Edwards,NULL,137
+Dickens,NULL,125
+Fayette,NULL,149
+Jim Hogg,NULL,247
+La Salle,NULL,283
+Lipscomb,NULL,295
+Live Oak,NULL,297
+Presidio,NULL,377
+McMullen,NULL,311
+Mitchell,NULL,335
+Montague,NULL,337
+Colorado,NULL,89
+Comanche,NULL,93
+Eastland,NULL,133
+Crockett,NULL,105
+Franklin,NULL,159
+Gonzales,NULL,177
+Hardeman,NULL,197
+Hemphill,NULL,211
+Hamilton,NULL,193
+Hansford,NULL,195
+Brewster,NULL,43
+Wheeler,NULL,483
+Winkler,NULL,495
+Swisher,NULL,437
+Terrell,NULL,443
+Sherman,NULL,421
+Roberts,NULL,393
+Runnels,NULL,399
+Refugio,NULL,391
+Madison,NULL,313
+Morris,NULL,343
+Motley,NULL,345
+Lavaca,NULL,285
+Loving,NULL,301
+Marion,NULL,315
+Menard,NULL,327
+Dimmit,NULL,127
+Donley,NULL,129
+Fisher,NULL,151
+Fannin,NULL,147
+Gaines,NULL,165
+Karnes,NULL,255
+Kimble,NULL,267
+Kinney,NULL,271
+Jasper,NULL,241
+Grimes,NULL,185
+Baylor,NULL,23
+Bailey,NULL,17
+Blanco,NULL,31
+Borden,NULL,33
+Bosque,NULL,35
+Burnet,NULL,53
+Brooks,NULL,47
+Castro,NULL,69
+Dallam,NULL,111
+Cottle,NULL,101
+Concho,NULL,95
+Terry,NULL,445
+Rains,NULL,379
+Tyler,NULL,457
+Upton,NULL,461
+Young,NULL,503
+Milam,NULL,331
+Mills,NULL,333
+Pecos,NULL,371
+Mason,NULL,319
+Llano,NULL,299
+Duval,NULL,131
+Foard,NULL,155
+Garza,NULL,169
+Floyd,NULL,153
+Crane,NULL,103
+Delta,NULL,119
+Cass,NULL,67
+Camp,NULL,63
+Lee,NULL,287
+Coke,NULL,81
+Hill,NULL,217
+Hall,NULL,191
+Frio,NULL,163
+Knox,NULL,275
+King,NULL,269
+Kent,NULL,263
+Jack,NULL,237
+Wood,NULL,499
+Real,NULL,385
+Ward,NULL,475
+Leon,NULL,289
+Lamb,NULL,279
+Polk,NULL,373

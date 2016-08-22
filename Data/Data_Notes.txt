@@ -1,10 +1,107 @@
 # Data_Notes.txt, Description of data files in this directory
-
-* District_Classification_200708_201415.csv:
-- School districts classified by TEA-defined categories
-- One row for each district and each school year beginning with the 2007-08 school year and ending with the 2014-15 school year
-- Data was retrieved and manually formatted from http://tea.texas.gov/acctres/analyze/years.html in July 2016
-
 * A1607092.zip:
 - Compressed folder containing district and job type salary information for each school year beginning with the 1993-94 school year and ending with the 2010-11 school year
 - This data was requested from and provided by Nina Taylor at the TEA (nina.taylor@tea.texas.gov) in July 2016
+* Data Table structure
+** MapDistrictCounty
+*** Description
+Relates school districts to the counties that they are nested in. Sourced from TEA website.
+*** Variables
+- DistrictID
+- CountyName
+
+** MapCountyPOWPUMA12
+*** Description
+Counties are nested in Place of Work PUMAs for the 2010 Census convention, which is in effect for survey years beginning in 2012. This data relates counties to this POWPUMA definition. Sourced from http://mcdc.missouri.edu/websas/geocorr12.html
+*** Variables
+- CountyName
+- POWPUMA12
+
+** MapCountyPOWPUMA2K
+*** Description
+Surveys from 2011 and before use the 2000 Census definition of Place of Work PUMAs, which are not always wholly nested in counties. This data relates counties to the 2000 Census definition of POWPUMAs and provides a weight variable based on the 2010 Census population that can be used for aggregation when counties are note wholly nested in POWPUMAs. Sourced from http://mcdc.missouri.edu/websas/geocorr12.html
+*** Variables
+- CountyName
+- POWPUMA2K
+- Weight
+
+** SchoolYearIndexYear
+*** Description
+A simple relation between the school year and the index year for joining index results to district level data. Since a school year is split between calendar years, a choice must be made on application; I chose to map index years to the calendar year in which school begins, primarily for the convenience of extending the AltCWI to more recent school years.
+*** Variables
+- SchoolYear
+- IndexYear
+
+** TEADistrictSalaryRecapture
+*** Description
+This data contains aggregate salary and employee count for each district and school year, along with district level recapture payments. The code to comile this dataset is in the source directory as 'Texas_Teacher_Comp_TEA.R'
+*** Variables
+- DistrictID
+- DistrictName
+- DistrictClassification
+- SchoolYear
+- TeacherSalary
+- TeacherFTE
+- RecapturePaid
+** AltCWI
+*** Description
+This is the output of the Alternative CWI that is built using Census data. The code to pull data, construct the index, and output this data file is in the source directory as 'Texas_Teacher_Comp_AltCWI.R'
+*** Variables
+- POWPUMA
+- IndexYear
+- AltCWI
+- AltCWIHigh
+- AltCWILow
+
+** MapCountyMetro
+*** Description
+This data relates counties to Metropolitan areas. Sourced from a crosswalk table on Zillow's researh site: http://www.zillow.com/research/data/.
+*** Variables
+- CountyName
+- MetroName
+- CountyFIPS
+
+** ZillowIndex
+*** Description
+This data contains Zillow's home value and rental indexes (ZHVI, ZRI) for Texas as a whole, Texas Counties, and Texas Metropolitan areas. Sourced from Zillow's researh site: http://www.zillow.com/research/data/.
+*** Variables
+- RegionName
+- RegionType
+- IndexMonth
+- IndexType
+- IndexValue
+
+** IndexMonthSchoolYear
+*** Description
+Zillow provides their index information at the month level. This data relates those months to the school year with a break between August and September.
+*** Variables
+- IndexMonth
+- SchoolYear
+
+** MapPUMA2KPOWPUMA2K
+*** Description
+Relates PUMA to POWPUMA using the 2000 Census convention. Since PUMA is not used in any of the other datasets, this is not neccesary for data analysis, but it was used in constructing some crosswalks above, so is kept here for reference.
+*** Variables
+- PUMA2K
+- POWPUMA2K
+
+** MapPUMA12POWPUMA12
+*** Description
+Relates PUMA to POWPUMA using the 2010 Census convention. Since PUMA is not used in any of the other datasets, this is not neccesary for data analysis, but it was used in constructing some crosswalks above, so is kept here for reference.
+*** Variables
+- PUMA12
+- POWPUMA12
+** DistrictClassification
+*** Description
+TEA District classification for each school year. 2015-16 school year is a clone of 2014-15, the latest available school year. Sourced from TEA's website (http://tea.texas.gov/acctres/analyze/years.html) for the 2007-08 school year and later. Data from eariler school years was provided by special request from the Research and Analysis department of TEA (email: brittany.write@tea.texas.gov, by way of research@tea.texas.gov).
+*** Variables
+- DistrictID
+- SchoolYear
+- DistricClassification
+** RecapturePaid
+*** Description
+Recapture amount paid by district and school year. Sourced from TEA's website (http://tea.texas.gov/Finance_and_Grants/State_Funding/Chapter_41_Wealth_Equalization/Chapter__41_Wealth_Equalization/).
+*** Variables
+- DistrictID
+- SchoolYear
+- RecapturePaid
