@@ -2,7 +2,9 @@
 * A1607092.zip:
 - Compressed folder containing district and job type salary information for each school year beginning with the 1993-94 school year and ending with the 2010-11 school year
 - This data was requested from and provided by Nina Taylor at the TEA (nina.taylor@tea.texas.gov) in July 2016
-* Data Table structure
+* DistrictList.py
+- File containing a list of ditrict names used in RecaptureFormScraper.py
+* CSV Data Table structure
 ** MapDistrictCounty
 *** Description
 Relates school districts to the counties that they are nested in. Sourced from TEA website.
@@ -10,19 +12,13 @@ Relates school districts to the counties that they are nested in. Sourced from T
 - DistrictID
 - CountyName
 
-** MapCountyPOWPUMA12
+** MapCountyPOWPUMA
 *** Description
-Counties are nested in Place of Work PUMAs for the 2010 Census convention, which is in effect for survey years beginning in 2012. This data relates counties to this POWPUMA definition. Sourced from http://mcdc.missouri.edu/websas/geocorr12.html
+Counties are nested in Place of Work PUMAs for the 2010 Census convention, which is in effect for survey years beginning in 2012. Surveys from 2011 and before use the 2000 Census definition of Place of Work PUMAs, which are not always wholly nested in counties. This data relates counties to the 2000 Census definition of POWPUMAs under the POWPUMAType 'POWPUMA2K', and the 2010 Census definition under the POWPUMAType 'POWPUMA12'. Additionally, this data provides a weight variable based on the 2010 Census population that can be used for aggregation when counties are note wholly nested in POWPUMAs. Sourced from http://mcdc.missouri.edu/websas/geocorr12.html
 *** Variables
 - CountyName
-- POWPUMA12
-
-** MapCountyPOWPUMA2K
-*** Description
-Surveys from 2011 and before use the 2000 Census definition of Place of Work PUMAs, which are not always wholly nested in counties. This data relates counties to the 2000 Census definition of POWPUMAs and provides a weight variable based on the 2010 Census population that can be used for aggregation when counties are note wholly nested in POWPUMAs. Sourced from http://mcdc.missouri.edu/websas/geocorr12.html
-*** Variables
-- CountyName
-- POWPUMA2K
+- POWPUMA
+- POWPUMAType
 - Weight
 
 ** SchoolYearIndexYear
@@ -91,6 +87,7 @@ Relates PUMA to POWPUMA using the 2010 Census convention. Since PUMA is not used
 *** Variables
 - PUMA12
 - POWPUMA12
+
 ** DistrictClassification
 *** Description
 TEA District classification for each school year. 2015-16 school year is a clone of 2014-15, the latest available school year. Sourced from TEA's website (http://tea.texas.gov/acctres/analyze/years.html) for the 2007-08 school year and later. Data from eariler school years was provided by special request from the Research and Analysis department of TEA (email: brittany.write@tea.texas.gov, by way of research@tea.texas.gov).
@@ -98,6 +95,7 @@ TEA District classification for each school year. 2015-16 school year is a clone
 - DistrictID
 - SchoolYear
 - DistricClassification
+
 ** RecapturePaid
 *** Description
 Recapture amount paid by district and school year. Sourced from TEA's website (http://tea.texas.gov/Finance_and_Grants/State_Funding/Chapter_41_Wealth_Equalization/Chapter__41_Wealth_Equalization/).
@@ -105,3 +103,13 @@ Recapture amount paid by district and school year. Sourced from TEA's website (h
 - DistrictID
 - SchoolYear
 - RecapturePaid
+
+** UpdatedRecapture
+*** Description
+Recapture amount paid, or expected to be paid by each district for recent school years. Results are generated from RecaptureFormScraper.py.
+*** Variables
+- DistrictID
+- SchoolYear
+- ReportDate
+- PaymentCycle
+- RecaptureAmount

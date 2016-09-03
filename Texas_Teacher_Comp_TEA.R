@@ -22,7 +22,6 @@ aged.salary.zipfile.path <- paste0(source.dir, '/Data/A1607092.zip')
 unzip(aged.salary.zipfile.path)
 
 get.salary.data.from.file <- function(end.year) {
-    end.year <- '11'
     salary.file.path <- paste0('A1607092_', end.year, '.csv')
     raw.dat <- read.csv(salary.file.path, stringsAsFactors = FALSE)
     raw.dat <- raw.dat[raw.dat$STAFF_GROUP== '01-PROFESSIONAL TEACHING STAFF', ]

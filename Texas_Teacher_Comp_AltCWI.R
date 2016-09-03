@@ -21,11 +21,11 @@ extract.files <- function(year) {
     } else {
         url <- paste0(url.stub, year.str, '/1-Year/csv_ptx.zip')
     }
-    download.file(url = url, destfile = dest.zipfile)
+    #download.file(url = url, destfile = dest.zipfile)
 
     file <- paste0('ss', substring(year.str, 3, 4), 'ptx.csv')
 
-    unzip(dest.zipfile, files = file)
+    #unzip(dest.zipfile, files = file)
 
     read.file <- read.csv(file = file)
     return(read.file)
@@ -122,7 +122,7 @@ dat$Occupation.Teacher <- (dat$OCCP %in% c(2310, 2320))
 dat$PrivateSectorOcc <- (dat$COW %in% c(1, 2))
 
 run.model <- function(year) {
-    model <- lm(data = dat[dat$SurveyYear == 2005 & !dat$Occupation.Teacher & dat$PrivateSectorOcc, ],
+    model <- lm(data = dat[dat$SurveyYear == year & !dat$Occupation.Teacher & dat$PrivateSectorOcc, ],
                 formula = MV.lWage ~ MV.Female +
                     MV.MastersDegree + MV.ProfDegree + MV.DoctDegree +
                     MV.HoursWorked + MV.WeeksWorked + MV.Age + MV.AgeSq +
