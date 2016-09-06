@@ -21,11 +21,11 @@ extract.files <- function(year) {
     } else {
         url <- paste0(url.stub, year.str, '/1-Year/csv_ptx.zip')
     }
-    #download.file(url = url, destfile = dest.zipfile)
+    download.file(url = url, destfile = dest.zipfile)
 
     file <- paste0('ss', substring(year.str, 3, 4), 'ptx.csv')
 
-    #unzip(dest.zipfile, files = file)
+    unzip(dest.zipfile, files = file)
 
     read.file <- read.csv(file = file)
     return(read.file)
